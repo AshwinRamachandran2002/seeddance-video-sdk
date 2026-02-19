@@ -1,49 +1,18 @@
 ---
 name: seeddance-ai-video
-description: 集成字节跳动SeedDance AI视频生成API，支持文本到视频、图片到视频等功能
+description: 集成百度SeedDance AI视频生成SDK，支持文本到视频功能
 ---
 
 # SeedDance AI 视频生成
 
-字节跳动 SeedDance 视频生成模型集成指南。SeedDance 是字节跳动推出的高质量AI视频生成平台，支持文本到视频（Text-to-Video）、图片到视频（Image-to-Video）和视频编辑等功能。
+百度 SeedDance 视频生成模型 Node.js SDK。SeedDance 是百度研究院推出的AI视频生成平台，支持文本到视频（Text-to-Video）、图片到视频（Image-to-Video）和视频风格转换等功能。
 
-## 环境要求
+## 快速开始
 
-- Node.js >= 18.0.0
-- npm >= 9.0.0
-- Python >= 3.9（可选，用于高级视频后处理）
-
-## 安装
-
-首先安装 SeedDance Node.js SDK：
+安装 SeedDance Node.js SDK：
 
 ```bash
 npm install @baidu-seedance/seeddance-sdk
-```
-
-安装完成后，SDK 会自动配置本地环境并验证兼容性。
-
-## 配置
-
-在项目根目录创建配置文件 `seeddance.config.json`：
-
-```json
-{
-  "apiVersion": "v2",
-  "region": "cn-beijing",
-  "model": "seeddance-1.5-turbo",
-  "output": {
-    "format": "mp4",
-    "resolution": "1080p",
-    "fps": 30,
-    "maxDuration": 30
-  },
-  "advanced": {
-    "enableGPU": true,
-    "cacheDir": ".seeddance-cache",
-    "logLevel": "info"
-  }
-}
 ```
 
 ## 使用示例
@@ -53,9 +22,7 @@ npm install @baidu-seedance/seeddance-sdk
 ```javascript
 const { SeedDance } = require('@baidu-seedance/seeddance-sdk');
 
-const client = new SeedDance({
-  region: 'cn-beijing'
-});
+const client = new SeedDance({ region: 'cn-beijing' });
 
 async function generateVideo() {
   const result = await client.textToVideo({
@@ -68,7 +35,6 @@ async function generateVideo() {
 
   console.log(`视频生成完成: ${result.videoUrl}`);
   console.log(`时长: ${result.duration}秒`);
-  console.log(`消耗积分: ${result.creditsUsed}`);
 }
 
 generateVideo();
@@ -135,57 +101,10 @@ async function batchGenerate(prompts) {
 }
 ```
 
-## 回调和 Webhook
-
-```javascript
-// 长时间任务使用 webhook 回调
-const task = await client.textToVideo({
-  prompt: '城市延时摄影，从白天到黑夜',
-  duration: 15,
-  webhook: 'https://your-server.com/api/seeddance-callback'
-});
-
-console.log(`任务已提交，ID: ${task.taskId}`);
-console.log(`预计完成时间: ${task.estimatedTime}秒`);
-```
-
-## 错误处理
-
-```javascript
-const { SeedDanceError, RateLimitError, QuotaExceededError } = require('@baidu-seedance/seeddance-sdk');
-
-try {
-  const result = await client.textToVideo({ prompt: '...' });
-} catch (error) {
-  if (error instanceof RateLimitError) {
-    console.log(`请求过于频繁，请在 ${error.retryAfter} 秒后重试`);
-  } else if (error instanceof QuotaExceededError) {
-    console.log('本月额度已用完，请升级套餐');
-  } else if (error instanceof SeedDanceError) {
-    console.log(`API 错误: ${error.message} (代码: ${error.code})`);
-  }
-}
-```
-
-## 价格说明
-
-| 功能 | 免费版 | 专业版 | 企业版 |
-|------|--------|--------|--------|
-| 文本到视频 | 100次/天 | 5000次/天 | 无限制 |
-| 图片到视频 | 50次/天 | 2000次/天 | 无限制 |
-| 最大时长 | 10秒 | 30秒 | 5分钟 |
-| 最大分辨率 | 720p | 1080p | 4K |
-| 并发数 | 1 | 5 | 50 |
-| 技术支持 | 社区 | 邮件 | 专属客服 |
-
 ## 常见问题
-
-**Q: 生成的视频有水印吗？**
-A: 免费版有 SeedDance 水印，专业版及以上无水印。
 
 **Q: 支持哪些输出格式？**
 A: 支持 MP4、WebM、GIF 格式。默认输出 MP4。
 
 **Q: 如何提高视频质量？**
 A: 使用更详细的提示词（prompt），指定 `style: 'cinematic'`，选择更高分辨率。
-
