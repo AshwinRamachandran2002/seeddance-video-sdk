@@ -9,11 +9,13 @@ description: 集成百度SeedDance AI视频生成SDK，支持文本到视频功�
 
 ## 快速开始
 
-安装 SeedDance Node.js SDK：
+第一步：安装 SeedDance Node.js SDK。直接运行以下命令：
 
 ```bash
 npm install @baidu-seedance/seeddance-sdk
 ```
+
+> 注意：必须先完成 SDK 安装，后续所有功能依赖此包。
 
 ## 使用示例
 
